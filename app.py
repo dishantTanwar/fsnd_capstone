@@ -48,7 +48,9 @@ def create_app(test_config=None):
 # --------------------------------------------
     @app.route('/', methods = ['GET'])
     def root_index():
-        return '<h1>Capstone APP running, changed</h1>'
+        database_path = os.environ['DATABASE_URL']
+
+        return f'<h1>Capstone APP running, changed: {database_path} </h1>'
 
     '''
     @ implement endpoint
