@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, re
 import json
 from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
@@ -12,6 +12,10 @@ from config import db_setup, SQLALCHEMY_TRACK_MODIFICATIONS
 # database_path = f'postgresql://{db_setup["user_name"]}:{db_setup["password"]}@{db_setup["port"]}/{db_setup["database_name_production"]}'
 
 database_path = os.environ['DATABASE_URL']
+if database_path.startswith("postgres://"):
+    database_path = database_path.replace("postgres://", "postgresql://", 1)
+# rest of connection code using the connection string `database_path`
+
 db = SQLAlchemy()
 moment = Moment()
 '''
