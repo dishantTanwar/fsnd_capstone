@@ -48,7 +48,7 @@ def create_app(test_config=None):
 # --------------------------------------------
     @app.route('/', methods = ['GET'])
     def root_index():
-        return '<h1>Capstone APP running</h1>'
+        return '<h1>Capstone APP running, changed</h1>'
 
     '''
     @ implement endpoint
