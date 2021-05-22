@@ -9,11 +9,9 @@ from flask_migrate import Migrate
 
 from config import db_setup, SQLALCHEMY_TRACK_MODIFICATIONS
 
-# database_name = "trivia"
-# database_path = "postgres://{}/{}".format('localhost:5432', database_name)
-database_path = f'postgresql://{db_setup["user_name"]}:{db_setup["password"]}@{db_setup["port"]}/{db_setup["database_name_production"]}'
+# database_path = f'postgresql://{db_setup["user_name"]}:{db_setup["password"]}@{db_setup["port"]}/{db_setup["database_name_production"]}'
 
-
+database_path = os.environ['DATABASE_URL']
 db = SQLAlchemy()
 moment = Moment()
 '''
