@@ -27,8 +27,8 @@ def setup_db(app, database_path=database_path):
 	moment.app = app
 	db.init_app(app)
 	Migrate(app, db)
-    # db.create_all()
-	# fill_dummy()
+	db.create_all()
+	fill_dummy()
 
 	# connect to a local postgresql database
 # ---------------------------------------------------------
