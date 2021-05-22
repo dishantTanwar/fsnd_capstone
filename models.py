@@ -24,7 +24,7 @@ def setup_db(app, database_path=database_path):
 	db.app = app
 	moment.app = app
 	db.init_app(app)
-	db.create_all()
+	# db.create_all()
 	# Migrate(app, db)
 	# fill_dummy()
 
