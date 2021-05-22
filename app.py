@@ -48,9 +48,8 @@ def create_app(test_config=None):
 # --------------------------------------------
     @app.route('/', methods = ['GET'])
     def root_index():
-        database_path = os.environ['DATABASE_URL']
 
-        return f'<h1>Capstone APP running, changed: {database_path} </h1>'
+        return '<h1>Capstone APP running</h1>'
 
     '''
     @ implement endpoint
@@ -413,5 +412,5 @@ def create_app(test_config=None):
 app = create_app()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run()
 
