@@ -152,7 +152,7 @@ Each ressource documentation is clearly structured:
 Get all actors
 
 ```bash
-$ curl -X GET https:
+$ curl -X GET https://udacapfsnd.herokuapp.com/actors
 ```
 - Fetches a list of dictionaries of actors
 - Request Headers: **None**
@@ -186,7 +186,7 @@ $ curl -X GET https:
 Add new Actor into database.
 
 ```bash
-$ curl -X POST https:
+$ curl -X POST https://udacapfsnd.herokuapp.com/actors
 ```
 
 - Request Arguments: **None**
@@ -212,7 +212,7 @@ If you try to create a actor without required value like `name`,
 it will throw a `400` error:
 
 ```bash
-$ curl -X GET https://
+$ curl -X GET https://udacapfsnd.herokuapp.com/actors>
 ```
 
 will return
@@ -231,7 +231,7 @@ will return
 Edit details of an existing Actor
 
 ```bash
-$ curl -X PATCH https://
+$ curl -X PATCH https://udacapfsnd.herokuapp.com/actors/<actor_id>
 ```
 
 - Request Arguments: **integer** `id of actor you want to update`
@@ -266,7 +266,7 @@ $ curl -X PATCH https://
 If you try to update an actor with an invalid id it will throw an `404`error:
 
 ```bash
-$ curl -X PATCH https://
+$ curl -X PATCH https://udacapfsnd.herokuapp.com/actors/<actor_id>
 ```
 
 will return
@@ -294,7 +294,7 @@ Additionally, an `PATCH` request with no body will result in an following error.
 Delete an existing Actor
 
 ```bash
-$ curl -X DELETE https://
+$ curl -X DELETE https://udacapfsnd.herokuapp.com/actors/<actor_id>
 
 - Request Arguments: **integer** `id from actor you want to delete`
 - Request Headers: `None`
@@ -315,7 +315,7 @@ $ curl -X DELETE https://
 If you try to delete actor with an invalid id, it will throw an `404`error:
 
 ```bash
-$ curl -X DELETE https://
+$ curl -X DELETE https://udacapfsnd.herokuapp.com/actors/<actor_id>
 ```
 
 will return
@@ -334,7 +334,7 @@ will return
 Get all movies
 
 ```bash
-$ curl -X GET https://
+$ curl -X GET https://udacapfsnd.herokuapp.com/movies
 ```
 - Fetches a list of dictionaries of movies
 - Request Headers: **None**
@@ -370,7 +370,7 @@ $ curl -X GET https://
 Add a new Movie into database.
 
 ```bash
-$ curl -X POST https://
+$ curl -X POST https://udacapfsnd.herokuapp.com/movies
 ```
 
 - Request Arguments: **None**
@@ -395,7 +395,7 @@ If you try to create a movie without required value like `title`,
 it will throw a `400` error:
 
 ```bash
-$ curl -X GET https://
+$ curl -X GET https://udacapfsnd.herokuapp.com/movies
 ```
 
 will return
@@ -414,7 +414,7 @@ will return
 Edit an existing Movie
 
 ```bash
-$ curl -X PATCH https://
+$ curl -X PATCH https://udacapfsnd.herokuapp.com/movies/<movie_id>
 ```
 
 - Request Arguments: **integer** `id from movie you want to update`
@@ -451,7 +451,7 @@ $ curl -X PATCH https://
 If you try to update an movie with an invalid id it will throw an `404`error:
 
 ```bash
-$ curl -X PATCH https://
+$ curl -X PATCH https://udacapfsnd.herokuapp.com/movies/<movie_id>
 ```
 
 will return
@@ -479,7 +479,7 @@ Additionally, an `PATCH` request with no body will result in an following error.
 Delete an existing movie
 
 ```bash
-$ curl -X DELETE https://
+$ curl -X DELETE https://udacapfsnd.herokuapp.com/movies/<movie_id>
 ```
 
 - Request Arguments: **integer** `id from movie you want to delete`
@@ -501,7 +501,7 @@ $ curl -X DELETE https://
 If you try to delete movie with an invalid id, it will throw an `404`error:
 
 ```bash
-$ curl -X DELETE https://
+$ curl -X DELETE https://udacapfsnd.herokuapp.com/movies/<movie_id>
 ```
 
 will return
