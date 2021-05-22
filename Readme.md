@@ -517,7 +517,7 @@ will return
 # <a name="authentification"></a>
 ## Authentication with Roles and Premissions
 
-All API Endpoints are decorated with Auth0 permissions. 
+All API Endpoints are decorated with (Auth0)[https://auth0.com/] permissions. 
 - permission, as the names sugests give authority to the permission holder of the resources defined in the permission
 
 - roles, are a set of permissions which can be assumed by an resource or user. 
@@ -555,15 +555,37 @@ Each role has different `permissions` assumed by them which are provided below
 **Permissions: Actors**
 
 `delete:actors`	    can delete actors	
+
 `patch:actors`  	can update existing actor details	
+
 `post:actors`	    can add a new actor	
+
 
 **Permissions: Director**
 
 `delete:actors`	    can delete actors		
+
 `delete:movies`	    can delete movies		
+
 `patch:actors`  	can update existing actor details
+
 `patch:movies`  	can update existing movie details
+
 `post:actors`	    can add a new actor		
+
 `post:movies`	    can add a new movie	
+
+### **Note**: Setting up Auth0 Account and getting JWT-Tokken:
+- To get started with Auth0 authentication, create you account on [their website](https://auth0.com/)
+- Create an application as per your requirement
+- Create an API, and set permissions mentioned above in permissions section of API. 
+- In user management, create roles and assign permissions likes of which I mentioned above.
+- Create user on auth web console or by signing up from browser with url like:
+
+https://{DOMAIN}/authorize?audience={API_AUDIENCE}&response_type=token&client_id={CLIENT_ID}&redirect_uri={http://127.0.0.1:5000/login (in my case) or URL_CALLBACK (one chosen by you)}
+- after success sign up in the url you will see key value pair with key being `token` and value being `<a-JWT-token>. Take note of this `JWT-token` as this will be used by the User to make interact with API by adding this token in header of requests.
+
+- Assign the roles you created above to the User using web console.
+
+- you are now ready to make requests that are permited to the user as per the roles asigned
 
