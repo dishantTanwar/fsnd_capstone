@@ -10,14 +10,25 @@
 <a name="motivation"></a>
 ## Motivations & Contents
 
-This is the final project of the `Udacity-Full-Stack-Nanodegree` Nanodegree.
-I used the following for this project
+This is the final project of the `Udacity-Full-Stack-Nanodegree` Nanodegree. Acter learning a lots of things like Flask, SQL-Alchemy, RBAC, database migration and security, and best practices for API development. I'm happy to share it with you.
+
+I used the following `dependencies` for this project
 
 1. Data modeling with `postgres` & `sqlalchemy` (see `models.py`)
 2. API with CRUD functionality `Flask` (see `app.py`)
 3. Automated testing using `Unittest` (see `test_app`)
 4. Authorization & Role based Authentication with `Auth0` (see `auth.py`)
 5. Deployment on `Heroku`
+
+**More about dependencies**
+`postgres`: I used postgres as the database backend and heruko provies a easy to setup postgres server as well
+
+`sql-alchemy` : Using Flask SQL Alchemy ORM, our project can run on any SQL based dataset whether it be Oracle, SQLite ot other ones. Sql alchemy ORM gives flexibilty to our code in terms of querying and manipulating database. 
+
+`Flask` : I used Flask as a backend of my choice. It's a lightweight framework for backend development.
+
+`Unittest`: Automation testing saves us the most time and I chose Unittest for this cast.
+
 
 <a name="start-locally"></a>
 ## Setup Project locally
@@ -589,3 +600,46 @@ https://{DOMAIN}/authorize?audience={API_AUDIENCE}&response_type=token&client_id
 
 - you are now ready to make requests that are permited to the user as per the roles asigned
 
+## Bonus: Deployment in Heroku
+Follow these steps to deploy on Heroku. For those who are not aware of Heroku
+
+It's platform which is very popular among students, startups and small scale companies to host their API's and Websites.
+
+-It's very easy to get started and takes care of most things behind the scenes for you.
+
+- The documentaion is also very well crafted and easy to understand
+
+**Steps to deploy**
+After your app is ready and working great locally, it's now time to take it to the world.
+
+Before getting started make sure:
+- You have a `requirements.txt` file in your project to install dependencies on heroku server. you can create one by using command `pip freeze > requirements.txt`
+
+- You have a `Manager.py` file in your project root as well.
+
+We're ready now. Let's get started
+
+1. Create account on [Heroku](https://www.heroku.com/platform)
+2. We'll do our deployment using commandline so get yours as per your OS from [here](https://devcenter.heroku.com/categories/command-line)
+3. Set up `Procfile` file in root directory. Because our Flask is lightweight is not strong enough to work run as production envionment. we'll `Gunicorn webserver`. 
+  - Install it using `pip install gunicorn`
+  - In your `Procfile` add this text `web: gunicorn app:app`, make sure your application is housed in app.py
+4. Now Using Cli login to your heroku account.Using `heroku login`
+5. Create an app on heroku 
+  - use command `heroku create name_of_your_app` to create an app on heroku. This will return a git url.
+6. Add git remote for Heroku to local repository
+  - Using the git url from above, in terminal run: `git remote add heroku heroku_git_url`
+7. Add `postgresql` resource to our app
+  - In terminal use `heroku addons:create heroku-postgresql:hobby-dev --app name_of_your_application`
+8. Configure environment variables
+  - Go to Heroku Dashboard > you app > application settings
+  - Reveal your `config variables`
+  - Enter your environment variables in key value form there.
+Note: You can use thse environment variables in your app using:
+`os.environ.get('NAME_OF_ENV_VAR')`
+9. We're ready let's push our code
+ - using `git push heroku master`
+10. App will be build and deployed. Now we have to run migrations.
+  - In terminal run `heroku run python manage.py db upgrade --app name_of_your_application`
+
+Great, app will is now a live application. 

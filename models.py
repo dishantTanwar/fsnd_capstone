@@ -1,4 +1,6 @@
-import os, sys, re
+import os
+import sys
+import re
 import json
 from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
@@ -9,7 +11,11 @@ from flask_migrate import Migrate
 
 from config import db_setup, SQLALCHEMY_TRACK_MODIFICATIONS
 
-# database_path = f'postgresql://{db_setup["user_name"]}:{db_setup["password"]}@{db_setup["port"]}/{db_setup["database_name_production"]}'
+'''
+# database_path = f'postgresql://{db_setup["user_name"]}:' + \
+                # f'{db_setup["password"]}@{db_setup["port"]}/' + \
+                # f'{db_setup["database_name_production"]}'
+'''
 
 database_path = os.environ['DATABASE_URL']
 if database_path.startswith("postgres://"):
@@ -22,138 +28,151 @@ moment = Moment()
 setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
-def setup_db(app, database_path=database_path):
-	app.config["SQLALCHEMY_DATABASE_URI"] = database_path
-	app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-	db.app = app
-	moment.app = app
-	db.init_app(app)
-	# db.create_all()
-	# Migrate(app, db)
-	# fill_dummy()
 
-	# connect to a local postgresql database
+
+def setup_db(app, database_path=database_path):
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    db.app = app
+    moment.app = app
+    db.init_app(app)
+    # db.create_all()
+    # Migrate(app, db)
+    # fill_dummy()
+
+    # connect to a local postgresql database
 # ---------------------------------------------------------
 # Models.
 # ---------------------------------------------------------
 
+
 def create_default_actor():
-	actor = Actor(name='Not disclosed',age='Not disclosed',gender='Not disclosed',msg_to_world='Not disclosed')
-	try:
-		actor.insert()
-	except:
-		print("Cannot create default actor data")
+    actor = Actor(name='Not disclosed', age='Not disclosed',
+                  gender='Not disclosed', msg_to_world='Not disclosed')
+    try:
+        actor.insert()
+    except Exception:
+        print("Cannot create d-efault actor data")
+
 
 def fill_dummy():
-	create_default_actor()
-	num_actors = [Actor.query.all()]
-	if not num_actors:
-		create_default_actor()
-	try:
-		# actor = Actor(name='Popye',age='80',gender='male',msg_to_world='eat spinich')
-		# actor.insert()
-		# movie = Movie(title='Popye the sailorman', genre='action', release_date='26 jan 1985')
-		# movie.insert()
+    create_default_actor()
+    num_actors = [Actor.query.all()]
+    if not num_actors:
+        create_default_actor()
+    try:
 
+        actor = Actor(name='Scarlett Johansson', age='36', gender='female',
+                      msg_to_world='The greatest glory in living lies not' +
+                      'in never falling, but in rising every time we fall.')
+        actor.insert()
+        movie = Movie(title='Lucy', genre='sci-fi',
+                      release_date=' 25 July 2014')
+        movie.insert()
 
-		actor = Actor(name='Scarlett Johansson',age='36',gender='female',msg_to_world='The greatest glory in living lies not in never falling, but in rising every time we fall.')
-		actor.insert()
-		movie = Movie(title='Lucy', genre='sci-fi', release_date=' 25 July 2014')
-		movie.insert()
-
-		actor = Actor(name='Robert Downey, Jr',age='56',gender='male',msg_to_world='The lesson is that you can still make mistakes and be forgiven.')
-		actor.insert()
-		movie = Movie(title='Iron Man', genre='action', release_date='April 14, 2008 ')
-		movie.insert()
-	except:
-		print("=============================================================")
-		print("	dummy data error")
-		db.session.close_all()
-		print("=============================================================")
+        actor = Actor(name='Robert Downey, Jr', age='56', gender='male',
+                      msg_to_world='The lesson is that you can still make' +
+                      'mistakes and be forgiven.')
+        actor.insert()
+        movie = Movie(title='Iron Man', genre='action',
+                      release_date='April 14, 2008 ')
+        movie.insert()
+    except Exception:
+        print("=============================================================")
+        print("	dummy data error")
+        db.session.close_all()
+        print("=============================================================")
 
 
 '''
-	Actor
-
+    Actor
 '''
-class Actor(db.Model):  
-	__tablename__ = 'actors'
 
-	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String, nullable=False)
-	age = db.Column(db.String, nullable=True, default='Not disclosed')
-	gender = db.Column(db.String, nullable=True, default='Not disclosed')
-	msg_to_world = db.Column(db.String, nullable=True)
 
-	# movie = db.relationship('Movie', backref='actor', lazy=True, cascade="all, delete") 
+class Actor(db.Model):
+    __tablename__ = 'actors'
 
-	def __init__(self, name, age, gender, msg_to_world):
-		self.name = name
-		self.age = age
-		self.gender = gender
-		self.msg_to_world = msg_to_world
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    age = db.Column(db.String, nullable=True, default='Not disclosed')
+    gender = db.Column(db.String, nullable=True, default='Not disclosed')
+    msg_to_world = db.Column(db.String, nullable=True)
 
-	def insert(self):
-		db.session.add(self)
-		db.session.commit()
+    # movie = db.relationship('Movie', backref='actor', lazy=True,
+    # cascade="all, delete")
 
-	def update(self):
-		db.session.commit()
+    def __init__(self, name, age, gender, msg_to_world):
+        self.name = name
+        self.age = age
+        self.gender = gender
+        self.msg_to_world = msg_to_world
 
-	def delete(self):
-		db.session.delete(self)
-		db.session.commit()
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
 
-	def format(self):
-		return {
-		'id': self.id,
-		'name': self.name,
-		'age': self.age,
-		'gender': self.gender,
-		'msg_to_world': self.msg_to_world
-		}
-	def __repr__(self) :
-		return f"<Actor id='{self.id}' name='{self.name}' msg_to_world='{self.msg_to_world}'>"
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def format(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'age': self.age,
+            'gender': self.gender,
+            'msg_to_world': self.msg_to_world
+        }
+
+    def __repr__(self):
+        return f"<Actor id='{self.id}' name='{self.name}' " + \
+            f"msg_to_world='{self.msg_to_world}'>"
 
 
 '''
 Movie
 
 '''
-class Movie(db.Model):  
-	__tablename__ = 'movies'
-
-	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.String, nullable=False)
-	genre = db.Column(db.String, nullable=True)
-	release_date = db.Column(db.String, nullable=True)
-	# actor_id = db.Column(db.Integer, db.ForeignKey(Actor.id), nullable=False)
-
-	def __init__(self, title, genre, release_date):
-		self.title =  title	
-		self.genre =  genre
-		self.release_date =  release_date
-		# self.actor_id = actor_id
 
 
-	def insert(self):
-		db.session.add(self)
-		db.session.commit()
+class Movie(db.Model):
+    __tablename__ = 'movies'
 
-	def update(self):
-		db.session.commit()
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String, nullable=False)
+    genre = db.Column(db.String, nullable=True)
+    release_date = db.Column(db.String, nullable=True)
+    # actor_id = db.Column(db.Integer, db.ForeignKey(Actor.id), nullable=False)
 
-	def delete(self):
-		db.session.delete(self)
-		db.session.commit()
+    def __init__(self, title, genre, release_date):
+        self.title = title
+        self.genre = genre
+        self.release_date = release_date
+        # self.actor_id = actor_id
 
-	def format(self):
-		return {
-		'id': self.id,
-		'title': self.title,
-		'release_date': self.release_date,
-		# 'actor' : self.actor.name,
-		# 'actor_id' : self.actor_id
-		}
-	def __repr__(self) :
-		return f"<Movie id='{self.id}' title='{self.title}' genre='{self.genre}' release_data='{self.release_date}' >"
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def format(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'release_date': self.release_date,
+            # 'actor' : self.actor.name,
+            # 'actor_id' : self.actor_id
+        }
+
+    def __repr__(self):
+        return f"<Movie id='{self.id}' title='{self.title}' " + \
+            f"genre='{self.genre}' release_data='{self.release_date}' >"
