@@ -1,6 +1,6 @@
 export c_id = 'b6dl6h3oQ9TtglDJVV18TLrCzqH5OM8u'
 export AUTH0_DOMAIN = 'fsnd-learn-auth.us.auth0.com'
-export ALGORITHMS = ['RS256']
+export ALGORITHMS = 'RS256'
 export API_AUDIENCE = 'capstone'
 
 
