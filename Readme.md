@@ -10,7 +10,7 @@
 <a name="motivation"></a>
 ## Motivations & Contents
 
-This is the final project of the `Udacity-Full-Stack-Nanodegree` Nanodegree. Acter learning a lots of things like Flask, SQL-Alchemy, RBAC, database migration and security, and best practices for API development. I'm happy to share it with you.
+This is the final project of the `Udacity-Full-Stack-Nanodegree` Nanodegree. After learning a lots of things like Flask, SQL-Alchemy, RBAC, database migration and security, and best practices for API development. I'm happy to share it with you.
 
 I used the following `dependencies` for this project
 
